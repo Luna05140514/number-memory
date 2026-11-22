@@ -12,6 +12,7 @@
   --font: "Baloo 2","Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
   --brown:#6b3a22;
   --cell:80px;
+  --ctlh:clamp(56px,13vw,92px);
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;height:100%;overflow:hidden;font-family:var(--font);color:var(--brown);user-select:none;-webkit-user-select:none}
@@ -34,44 +35,46 @@ button{font-family:inherit;cursor:pointer;touch-action:manipulation}
 /* ---------- App layout ---------- */
 #app{position:fixed;inset:0;z-index:1;display:grid;
   padding:max(10px,env(safe-area-inset-top)) max(12px,env(safe-area-inset-right)) max(10px,env(safe-area-inset-bottom)) max(12px,env(safe-area-inset-left));
-  grid-template-columns:1fr 1fr;
-  grid-template-rows:auto auto minmax(0,1fr) auto auto;
-  grid-template-areas:"title title" "lvl right" "board board" "status status" "actions actions";
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  grid-template-rows:auto auto minmax(0,1fr) auto;
+  grid-template-areas:"title title" "lvl right" "board board" "actions actions";
   gap:6px 10px}
 .titlebox{grid-area:title;display:flex;align-items:center;justify-content:center;gap:6px}
 .lvl{grid-area:lvl;display:flex;align-items:center;gap:8px;font-weight:900;font-size:clamp(20px,5.5vw,30px);color:var(--brown)}
 .lvl .star{height:1.9em;width:auto;filter:drop-shadow(0 3px 0 rgba(160,90,0,.2))}
 .right{grid-area:right;display:flex;align-items:center;justify-content:flex-end;gap:8px;flex-wrap:wrap}
-.boardwrap{grid-area:board;min-height:0;min-width:0;display:flex;align-items:center;justify-content:center;position:relative}
-.status{grid-area:status;text-align:center;font-weight:900;font-size:clamp(16px,4.2vw,22px);min-height:2.2em;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;color:#5a3a8a;text-shadow:0 2px 0 #fff}
+.boardwrap{grid-area:board;min-height:0;min-width:0;display:flex;flex-direction:column;gap:14px;align-items:center;justify-content:center;position:relative}
+.status{grid-area:status;min-width:0;text-align:center;font-weight:900;font-size:clamp(16px,4.2vw,22px);min-height:2.2em;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;color:#5a3a8a;text-shadow:0 2px 0 #fff}
 .actions{grid-area:actions;display:flex;gap:12px;justify-content:center;align-items:center}
 
 @media (min-width:860px) and (orientation:landscape){
   #app{grid-template-columns:minmax(230px,1fr) minmax(0,2.4fr) minmax(230px,1fr);
-    grid-template-rows:auto minmax(0,1fr) auto;
-    grid-template-areas:"lvl title right" ". board ." ". status actions";gap:8px 18px;padding:22px 28px}
+    grid-template-rows:auto minmax(0,1fr);
+    grid-template-areas:"lvl title right" ". board actions";gap:8px 18px;padding:22px 28px}
   .lvl{align-self:start;font-size:clamp(28px,3vw,44px)}
   .right{flex-direction:column;align-items:flex-end;align-self:start}
-  .actions{justify-content:flex-end;align-self:end}
+  .actions{flex-direction:column;align-items:flex-end;justify-content:flex-end;align-self:end;gap:14px}
   .status{align-self:center}
   .btn{font-size:clamp(20px,2vw,32px)}
-  .imgbtn img{height:clamp(64px,8vw,96px)}
   .mascot{height:clamp(110px,11vw,160px)}
 }
-.lvl .imgbtn{position:relative;border:none;background:none;padding:0;line-height:0;transition:transform .1s,filter .2s}
-.imgbtn img{height:clamp(56px,13vw,92px);width:auto;display:block;pointer-events:none;-webkit-user-drag:none}
-.imgbtn:active{transform:translateY(4px) scale(.97)}
-.imgbtn:disabled{filter:grayscale(.85) opacity(.55);cursor:default}
-.imgbtn:disabled:active{transform:none}
-.imgbtn .badge{position:absolute;top:-4px;right:-4px;line-height:1;min-width:1.6em;padding:.25em .4em;border-radius:99px;background:#f0507a;color:#fff;border:3px solid #fff;font-family:"Baloo 2",var(--font);font-weight:800;font-size:clamp(13px,3vw,18px);box-shadow:0 2px 0 rgba(0,0,0,.15)}
-.iconbtn{margin-left:auto;font-size:20px;width:44px;height:44px}
-@media (min-width:860px) and (orientation:landscape){.lvl .imgbtn{position:relative;border:none;background:none;padding:0;line-height:0;transition:transform .1s,filter .2s}
-.imgbtn img{height:clamp(56px,13vw,92px);width:auto;display:block;pointer-events:none;-webkit-user-drag:none}
-.imgbtn:active{transform:translateY(4px) scale(.97)}
-.imgbtn:disabled{filter:grayscale(.85) opacity(.55);cursor:default}
-.imgbtn:disabled:active{transform:none}
-.imgbtn .badge{position:absolute;top:-4px;right:-4px;line-height:1;min-width:1.6em;padding:.25em .4em;border-radius:99px;background:#f0507a;color:#fff;border:3px solid #fff;font-family:"Baloo 2",var(--font);font-weight:800;font-size:clamp(13px,3vw,18px);box-shadow:0 2px 0 rgba(0,0,0,.15)}
-.iconbtn{margin-left:10px}}
+.lvl{flex-wrap:wrap}
+.btn.startbtn{height:calc(var(--ctlh)*.86);min-width:calc(var(--ctlh)*1.75);padding:0 .8em;font-size:calc(var(--ctlh)*.36);border-radius:calc(var(--ctlh)*.26);display:inline-flex;align-items:center;justify-content:center}
+.btn.bigstart{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);animation:startpulse 1.4s ease-in-out infinite;z-index:2}
+.btn.bigstart:active{transform:translate(-50%,calc(-50% + 4px))}
+@keyframes startpulse{0%,100%{transform:translate(-50%,-50%) scale(1)}50%{transform:translate(-50%,-50%) scale(1.06)}}
+.startslot{flex:none;height:var(--ctlh);display:flex;align-items:center;justify-content:center}
+.btn.startbar{flex:none}
+.btn.startbar:not(:disabled){animation:barpulse 1.4s ease-in-out infinite}
+.frame{position:relative;flex:none}
+.tbar{position:absolute;left:8%;right:8%;top:calc(var(--cell)*.1);height:10px;border-radius:99px;background:rgba(255,255,255,.75);border:2px solid #fff;overflow:hidden;box-shadow:0 2px 4px rgba(120,80,170,.2)}
+.tbar i{display:block;height:100%;width:100%;background:linear-gradient(90deg,#ffd94a,#ff8a3d);border-radius:99px}
+@keyframes barpulse{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+.tools{display:flex;gap:8px;margin-left:auto}
+.tools .iconbtn{font-size:17px;width:38px;height:38px;flex:none}
+.lvl{gap:6px}
+@media (min-width:860px) and (orientation:landscape){.tools .iconbtn{font-size:20px;width:44px;height:44px}}
+@media (min-width:860px) and (orientation:landscape){.tools{flex-basis:100%;margin-left:4px}}
 
 /* ---------- Title ---------- */
 .mascot{height:clamp(64px,17vw,128px);width:auto;flex:none;filter:drop-shadow(0 3px 0 rgba(0,0,0,.08));animation:bob 3.4s ease-in-out infinite;transform-origin:bottom}
@@ -107,7 +110,7 @@ button{font-family:inherit;cursor:pointer;touch-action:manipulation}
 @keyframes bump{50%{transform:scale(1.12)}}
 
 /* ---------- Board ---------- */
-.board{--gap:calc(var(--cell)*.14);display:grid;gap:var(--gap);padding:calc(var(--cell)*.32);border-radius:calc(var(--cell)*.4);
+.board{--gap:calc(var(--cell)*.14);display:grid;box-sizing:border-box;justify-content:center;align-content:center;flex:none;gap:var(--gap);padding:calc(var(--cell)*.32);border-radius:calc(var(--cell)*.4);
   background:linear-gradient(160deg,rgba(255,200,225,.55),rgba(225,190,255,.5));
   box-shadow:inset 0 0 0 2px rgba(255,255,255,.6),0 10px 30px rgba(120,80,170,.15);
   transition:filter .2s}
@@ -157,7 +160,7 @@ button{font-family:inherit;cursor:pointer;touch-action:manipulation}
 .btn:disabled{filter:grayscale(.8);opacity:.6;cursor:default}
 .btn .badge{font-size:.6em;vertical-align:middle;background:#fff;color:#e2541f;border-radius:99px;padding:0 .45em;margin-left:.3em;text-shadow:none}
 .imgbtn{position:relative;border:none;background:none;padding:0;line-height:0;transition:transform .1s,filter .2s}
-.imgbtn img{height:clamp(56px,13vw,92px);width:auto;display:block;pointer-events:none;-webkit-user-drag:none}
+.imgbtn img{height:var(--ctlh);width:auto;display:block;pointer-events:none;-webkit-user-drag:none}
 .imgbtn:active{transform:translateY(4px) scale(.97)}
 .imgbtn:disabled{filter:grayscale(.85) opacity(.55);cursor:default}
 .imgbtn:disabled:active{transform:none}
@@ -190,10 +193,33 @@ button{font-family:inherit;cursor:pointer;touch-action:manipulation}
 .stat b{display:block;font-family:"Baloo 2",var(--font);font-size:28px;color:#22487a;line-height:1.2}
 .rank{display:inline-block;margin:6px 0;padding:8px 20px;border-radius:99px;font-family:"Noto Sans TC",var(--font);font-weight:900;font-size:clamp(22px,6vw,30px);color:#fff;
   background:linear-gradient(180deg,#ffb45a,#f2672a);border:4px solid #fff;box-shadow:0 5px 0 #c2471a;text-shadow:0 2px 0 #b8481a}
+.lvinfo{margin:10px 0 4px;font-family:"Noto Sans TC",var(--font);font-weight:900}
+.lvnow{font-size:26px;color:#5a3a8a}
+.lvleft{font-size:22px;color:#7a5a4a;margin-top:6px}
+.lvinfo b{font-family:"Baloo 2",var(--font);font-size:1.4em;color:#f0507a}
 .newrec{display:inline-block;margin-left:6px;font-size:14px;color:#fff;background:#f0507a;border-radius:99px;padding:2px 10px;vertical-align:middle;animation:bob 1s infinite}
 .breakdown{display:grid;grid-template-columns:1fr auto;gap:4px 16px;text-align:left;max-width:300px;margin:10px auto 0;font-weight:700;font-size:17px;color:#6a5a7a}
 .breakdown b{font-family:"Baloo 2",var(--font);text-align:right;color:#22487a}
 .breakdown .tot{border-top:2px dashed #e5d5f0;padding-top:6px;color:#f0507a;font-size:20px}
+
+/* ---------- Settings ---------- */
+.lvl span{white-space:nowrap}
+.final{font-size:.5em;background:#f0507a;color:#fff;border-radius:99px;padding:3px 9px;margin-left:6px;vertical-align:middle;font-family:"Noto Sans TC",var(--font)}
+#fireworks{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:20;display:none}
+.lvl .iconbtn+.iconbtn{margin-left:6px}
+.mode{opacity:.5;filter:saturate(.5);transition:opacity .15s,filter .15s,transform .1s;position:relative}
+.mode.sel{opacity:1;filter:none;outline:4px solid #ffd23a;outline-offset:2px}
+.mode.sel::after{content:"✓";position:absolute;top:-10px;right:-10px;width:30px;height:30px;border-radius:50%;background:#ffd23a;color:#6b3a10;font-weight:900;font-size:18px;line-height:30px;border:3px solid #fff}
+.setinfo{font-size:15px!important;color:#7a4ad0!important;background:#f5efff;border-radius:99px;display:inline-block;padding:4px 14px}
+.setrow{display:flex;align-items:center;justify-content:space-between;gap:12px;background:#f7f3ff;border-radius:20px;padding:12px 14px;margin:12px 0;text-align:left}
+.setlabel{font-weight:900;font-size:18px;color:#5a3a8a;font-family:"Noto Sans TC",var(--font)}
+.setlabel small{display:block;font-weight:700;font-size:13px;color:#9a88b8;margin-top:2px}
+.stepper{display:flex;align-items:center;gap:8px;flex:none}
+.stepper b{min-width:2.2em;text-align:center;font-family:"Baloo 2",var(--font);font-size:30px;color:#22487a}
+.stepper button{width:44px;height:44px;border-radius:50%;border:3px solid #fff;font-size:24px;font-weight:900;color:#fff;background:linear-gradient(180deg,#d99af7,#9c4fe0);box-shadow:0 4px 0 #6f2fae;line-height:1;padding:0}
+.stepper button:active{transform:translateY(3px);box-shadow:0 1px 0 #6f2fae}
+.stepper button:disabled{filter:grayscale(1);opacity:.4}
+.setpreview{font-size:15px!important;color:#6a6a8a!important}
 
 /* ---------- FX ---------- */
 #fx{position:fixed;inset:0;pointer-events:none;z-index:5}
@@ -202,6 +228,12 @@ button{font-family:inherit;cursor:pointer;touch-action:manipulation}
 .floattext{position:absolute;transform:translate(-50%,-50%);font-family:"Baloo 2",var(--font);font-weight:800;font-size:26px;color:#fff;text-shadow:0 0 0 #2f8a25,2px 2px 0 #2f8a25,-2px 2px 0 #2f8a25,2px -2px 0 #2f8a25,-2px -2px 0 #2f8a25;animation:floatup .9s ease-out forwards}
 @keyframes floatup{to{transform:translate(-50%,-160%);opacity:0}}
 .hidden{display:none!important}
+@media (min-width:860px) and (orientation:landscape){
+  :root{--ctlh:clamp(64px,8vw,96px)}
+  .mascot{height:clamp(110px,11vw,160px)}
+  .btn{font-size:clamp(20px,2vw,32px)}
+}
+@media (max-width:480px){.setlabel{font-size:16px}.stepper{gap:4px}.stepper button{width:38px;height:38px;font-size:20px}.stepper b{font-size:26px;min-width:1.6em}.setrow{padding:10px 12px;gap:8px}}
 </style>
 </head>
 <body>
@@ -227,7 +259,7 @@ button{font-family:inherit;cursor:pointer;touch-action:manipulation}
   <div class="lvl">
     <img class="star" src="assets/star.webp" alt="">
     <span>關卡 <b id="lvlNum">1</b></span>
-    <button class="iconbtn" id="btnMute" aria-label="音效開關">🔊</button>
+    <span class="tools"><button class="iconbtn" id="btnMute" aria-label="音效開關">🔊</button><button class="iconbtn" id="btnSettings" aria-label="後台設定">⚙️</button></span>
   </div>
   <div class="titlebox">
     <img class="mascot" src="assets/girl.webp" alt="">
@@ -235,29 +267,46 @@ button{font-family:inherit;cursor:pointer;touch-action:manipulation}
   </div>
   <div class="right">
     <div class="hearts" id="hearts"></div>
-    <div class="score" id="scoreBox">分數: <b id="score">0</b></div>
   </div>
-  <div class="boardwrap" id="boardWrap"><div class="board" id="board"></div></div>
-  <div class="status" id="status"></div>
+  <div class="boardwrap" id="boardWrap"><div class="frame"><div class="board" id="board"></div><div class="tbar hidden" id="tbar"><i id="barFill"></i></div></div></div>
+  <div class="status hidden" id="status"></div>
   <div class="actions">
-    <button class="btn green hidden" id="btnStart">開始</button>
-    <button class="imgbtn" id="btnPause" aria-label="暫停"><img src="assets/btnpause.webp" alt="暫停"></button>
+    <button class="btn green startbtn startbar" id="btnStart">▶ 開始</button>
+        <button class="imgbtn" id="btnPause" aria-label="暫停"><img src="assets/btnpause.webp" alt="暫停"></button>
     <button class="imgbtn" id="btnHint" aria-label="提示"><img src="assets/btnhint.webp" alt="提示"><span class="badge" id="hintBadge">1</span></button>
   </div>
 </div>
 <div id="fx"></div>
+<canvas id="fireworks"></canvas>
 
-<!-- Start screen -->
-<div class="overlay show" id="ovStart">
+<!-- Settings -->
+<div class="overlay" id="ovSettings">
   <div class="card">
-    <img src="assets/girl.webp" alt="" style="height:110px;width:auto;animation:bob 3s ease-in-out infinite">
-    <h2>數字順序記憶</h2>
-    <p>記住數字的位置，再依照 1 → 2 → 3… 的順序點回來！</p>
+    <h2 style="color:#7a4ad0;text-shadow:0 3px 0 #e6d8ff">⚙️ 後台設定</h2>
+    <div class="setlabel" style="text-align:left;margin:6px 4px 0">遊戲模式</div>
     <div class="modes">
-      <button class="mode classic" data-mode="classic"><span class="mt">經典模式</span><span class="md">點下 1 的瞬間<br>其他數字立刻蓋起來</span><span class="mb" id="bestClassic">最佳 0 分</span></button>
-      <button class="mode timed" data-mode="timed"><span class="mt">限時模式</span><span class="md">倒數幾秒後<br>所有數字一起蓋起來</span><span class="mb" id="bestTimed">最佳 0 分</span></button>
+      <button class="mode classic" data-mode="classic"><span class="mt">經典模式</span><span class="md">慢慢記，不限時間<br>按「開始」後全部蓋起來</span><span class="mb" id="bestClassic"></span></button>
+      <button class="mode timed" data-mode="timed"><span class="mt">限時模式</span><span class="md">只有幾秒能記<br>時間到自動全部蓋起來</span><span class="mb" id="bestTimed"></span></button>
     </div>
-    <div class="how">❤️ 共 3 條命，點錯會扣 1 條<br>💡 每關可以用 1 次「提示」，但會失去連擊加成<br>⭐ 越快完成、連續不失誤，分數越高</div>
+    <div class="setrow">
+      <div class="setlabel">第一關從幾個數字開始<small>2 ～ 30 個</small></div>
+      <div class="stepper"><button data-k="start" data-d="-1">−</button><b id="vStart">3</b><button data-k="start" data-d="1">＋</button></div>
+    </div>
+    <div class="setrow">
+      <div class="setlabel">最多幾個數字<small>到這個數量後就不再增加</small></div>
+      <div class="stepper"><button data-k="max" data-d="-1">−</button><b id="vMax">30</b><button data-k="max" data-d="1">＋</button></div>
+    </div>
+    <div class="setrow">
+      <div class="setlabel">一共幾關<small>1 ～ 50 關</small></div>
+      <div class="stepper"><button data-k="levels" data-d="-1">−</button><b id="vLevels">28</b><button data-k="levels" data-d="1">＋</button></div>
+    </div>
+    <p id="setPreview" class="setpreview"></p>
+    <p class="setpreview" style="font-size:13px!important">儲存後會從第 1 關重新開始</p>
+    <div class="row">
+      <button class="btn green small" id="btnSetSave">儲存</button>
+      <button class="btn purple small" id="btnSetReset">恢復預設</button>
+      <button class="btn small" id="btnSetCancel">取消</button>
+    </div>
   </div>
 </div>
 
@@ -266,7 +315,7 @@ button{font-family:inherit;cursor:pointer;touch-action:manipulation}
   <div class="card">
     <h2>暫停中</h2>
     <p>休息一下，準備好再繼續！</p>
-    <div class="row"><button class="btn green" id="btnResume">繼續</button><button class="btn purple" id="btnQuit">回主選單</button></div>
+    <div class="row"><button class="btn green" id="btnResume">繼續</button><button class="btn purple" id="btnQuit">重新開始</button></div>
   </div>
 </div>
 
@@ -274,7 +323,7 @@ button{font-family:inherit;cursor:pointer;touch-action:manipulation}
 <div class="overlay" id="ovClear">
   <div class="card">
     <img src="assets/star.webp" alt="" style="height:80px;width:auto;animation:bump 1s ease infinite"><h2 id="clearTitle">過關！</h2>
-    <div class="breakdown" id="breakdown"></div>
+    <div class="lvinfo" id="breakdown"></div>
     <div class="row"><button class="btn green" id="btnNext">下一關 ▶</button></div>
   </div>
 </div>
@@ -291,16 +340,16 @@ button{font-family:inherit;cursor:pointer;touch-action:manipulation}
 <!-- Game over -->
 <div class="overlay" id="ovOver">
   <div class="card">
-    <img src="assets/girl.webp" alt="" style="height:90px;width:auto"><h2>遊戲結束</h2>
+    <img src="assets/girl.webp" alt="" style="height:90px;width:auto"><h2 id="overTitle">遊戲結束</h2>
     <div><span class="rank" id="rankTitle">金魚腦畢業生</span></div>
     <p id="rankDesc"></p>
     <div class="stats">
-      <div class="stat"><small>分數</small><b id="oScore">0</b></div>
-      <div class="stat"><small>最高關卡</small><b id="oLevel">1</b></div>
-      <div class="stat"><small>記住數字</small><b id="oNums">0</b></div>
+      <div class="stat"><small>過了幾關</small><b id="oLevel">0</b></div>
+      <div class="stat"><small>一共幾關</small><b id="oTotal">0</b></div>
+      <div class="stat"><small>最多記住</small><b id="oNums">0</b></div>
     </div>
     <p id="oBest"></p>
-    <div class="row"><button class="btn green" id="btnAgain">再玩一次</button><button class="btn purple" id="btnMenu">主選單</button></div>
+    <div class="row"><button class="btn green" id="btnAgain">再玩一次</button><button class="btn purple" id="btnMenu">⚙️ 設定</button></div>
   </div>
 </div>
 
@@ -347,17 +396,36 @@ function heartSVG(alive){
 const CHECK_SVG = `<svg class="check" viewBox="0 0 50 50"><path d="M8 26 L20 38 L43 12" fill="none" stroke="#fff" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 26 L20 38 L43 12" fill="none" stroke="#3fae2e" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 
 /* ---------- Level config ---------- */
+/* ---------- Settings (後台設定) ---------- */
+const SET_KEY = "numflash-settings-v1";
+const SET_DEFAULT = {start:3, max:30, levels:28, mode:"classic"};
+const LEVELS_MAX = 50;
+const LIMIT = {min:2, max:30};
+function loadSettings(){
+  let v = {}; try{ v = JSON.parse(localStorage.getItem(SET_KEY)) || {}; }catch(e){}
+  return clampSettings({...SET_DEFAULT, ...v});
+}
+function clampSettings(v){
+  const start = Math.max(LIMIT.min, Math.min(LIMIT.max, Math.round(+v.start || SET_DEFAULT.start)));
+  const max = Math.max(start, Math.min(LIMIT.max, Math.round(+v.max || SET_DEFAULT.max)));
+  const levels = Math.max(1, Math.min(LEVELS_MAX, Math.round(+v.levels || (max - start + 1))));
+  const mode = v.mode === "timed" ? "timed" : "classic";
+  return {start, max, levels, mode};
+}
+let settings = loadSettings();
+function totalLevels(){ return settings.levels; }
+
 function levelCfg(lv){
+  const count = Math.min(settings.start + lv - 1, settings.max);
   let cols, rows, t;
-  if(lv <= 2){ cols = rows = 3; t = 3.0; }
-  else if(lv <= 5){ cols = rows = 4; t = 3.5; }
-  else if(lv <= 9){ cols = rows = 5; t = 4.5; }
+  if(count <= 4){ cols = rows = 3; t = 3.0; }
+  else if(count <= 7){ cols = rows = 4; t = 3.5; }
+  else if(count <= 11){ cols = rows = 5; t = 4.5; }
   else {
     const landscape = boardWrap.clientWidth > boardWrap.clientHeight * 1.1;
     cols = landscape ? 6 : 5; rows = landscape ? 5 : 6; t = 5.0;
   }
-  const count = Math.min(lv + 2, cols * rows);
-  return {cols, rows, count, time: t};
+  return {cols, rows, count, time: t, last: lv >= settings.levels};
 }
 
 /* Balanced random placement: pick the best of several random layouts */
@@ -397,18 +465,19 @@ function renderHearts(lostIndex=-1){
   if(lostIndex < 0) [...$("hearts").children].forEach(h=>h.classList.remove("lost"));
   else [...$("hearts").children].forEach((h,i)=>{ if(i!==lostIndex) h.classList.remove("lost"); });
 }
-function renderScore(bump){
-  $("score").textContent = S.score.toLocaleString("en-US");
-  if(bump){ const b=$("scoreBox"); b.classList.remove("bump"); void b.offsetWidth; b.classList.add("bump"); }
+function renderScore(){ /* scoring removed */
 }
-function setStatus(html){ statusEl.innerHTML = html.startsWith("<span") ? html : `<span>${html}</span>`; }
+function setStatus(html){ /* text under the board removed */ }
 
 function fit(){
   if(!S.cfg) return;
   const {cols, rows} = S.cfg;
-  const w = boardWrap.clientWidth, h = boardWrap.clientHeight;
-  const cell = Math.max(28, Math.min(w/(cols*1.14+0.5), h/(rows*1.14+0.5), 128));
-  board.style.setProperty("--cell", Math.floor(cell)+"px");
+  // The frame is always the same square size; only the cells inside shrink as the grid grows.
+  const size = Math.floor(Math.max(160, Math.min(boardWrap.clientWidth, boardWrap.clientHeight, 720)));
+  const n = Math.max(cols, rows);
+  const cell = Math.floor(size / (n*1.14 + 0.6));
+  board.style.width = board.style.height = size + "px";
+  board.style.setProperty("--cell", cell + "px");
 }
 
 function buildBoard(){
@@ -469,50 +538,112 @@ function sparkle(el, text){
   }
 }
 
+/* ---------- Fireworks ---------- */
+const fwCanvas = $("fireworks"), fwCtx = fwCanvas.getContext("2d");
+let fwParts = [], fwRockets = [], fwRaf = 0, fwEnd = 0, fwNextLaunch = 0, fwLast = 0;
+const FW_COLORS = ["#ff5b8a","#ffd23a","#5cc43a","#2ea7ee","#a65be0","#ff8a3d","#ffffff"];
+function fwResize(){ const d = Math.min(2, window.devicePixelRatio||1); fwCanvas.width = innerWidth*d; fwCanvas.height = innerHeight*d; fwCtx.setTransform(d,0,0,d,0,0); }
+function fwBoom(x, y){
+  const c1 = FW_COLORS[Math.floor(Math.random()*FW_COLORS.length)], c2 = FW_COLORS[Math.floor(Math.random()*FW_COLORS.length)];
+  const n = 60 + Math.floor(Math.random()*40), speed = 3 + Math.random()*3, star = Math.random() < .35;
+  for(let i=0;i<n;i++){
+    const a = (i/n)*Math.PI*2 + Math.random()*.1, v = speed*(.55 + Math.random()*.45);
+    fwParts.push({x, y, vx:Math.cos(a)*v, vy:Math.sin(a)*v, life:1, decay:.011 + Math.random()*.012, color: i%2?c1:c2, star, size: 2 + Math.random()*2});
+  }
+  tone(180 + Math.random()*80, .35, "sawtooth", .05, 0, 60); tone(1200 + Math.random()*600, .25, "sine", .03);
+}
+function fwLaunch(){
+  const x = innerWidth*(.15 + Math.random()*.7);
+  fwRockets.push({x, y: innerHeight + 10, vx:(Math.random()-.5)*1.5, vy: -(innerHeight/62 + Math.random()*3), ty: innerHeight*(.12 + Math.random()*.35), color:"#fff6c8"});
+  tone(500, .3, "sine", .03, 0, 1400);
+}
+function fwDrawStar(x, y, r){
+  fwCtx.beginPath();
+  for(let i=0;i<10;i++){ const rr = i%2 ? r*.45 : r, a = -Math.PI/2 + i*Math.PI/5; fwCtx.lineTo(x + Math.cos(a)*rr, y + Math.sin(a)*rr); }
+  fwCtx.closePath(); fwCtx.fill();
+}
+function fwFrame(ts){
+  const dt = Math.min(2.5, (ts - (fwLast||ts))/16.67 || 1); fwLast = ts;
+  fwCtx.clearRect(0, 0, innerWidth, innerHeight);
+  if(ts < fwEnd && ts >= fwNextLaunch){ fwLaunch(); if(Math.random()<.4) fwLaunch(); fwNextLaunch = ts + 280 + Math.random()*420; }
+  fwRockets = fwRockets.filter(r => {
+    r.x += r.vx*dt; r.y += r.vy*dt; r.vy += .12*dt;
+    fwCtx.fillStyle = r.color; fwCtx.beginPath(); fwCtx.arc(r.x, r.y, 3, 0, Math.PI*2); fwCtx.fill();
+    fwCtx.fillStyle = "rgba(255,210,120,.5)"; fwCtx.beginPath(); fwCtx.arc(r.x - r.vx*2, r.y - r.vy*2, 2, 0, Math.PI*2); fwCtx.fill();
+    if(r.y <= r.ty || r.vy >= 0){ fwBoom(r.x, r.y); return false; }
+    return true;
+  });
+  fwParts = fwParts.filter(p => {
+    p.x += p.vx*dt; p.y += p.vy*dt; p.vx *= Math.pow(.97, dt); p.vy = p.vy*Math.pow(.97, dt) + .06*dt; p.life -= p.decay*dt;
+    if(p.life <= 0) return false;
+    fwCtx.globalAlpha = Math.min(1, p.life*1.4); fwCtx.fillStyle = p.color;
+    if(p.star) fwDrawStar(p.x, p.y, p.size*2.2);
+    else { fwCtx.beginPath(); fwCtx.arc(p.x, p.y, p.size, 0, Math.PI*2); fwCtx.fill(); }
+    return true;
+  });
+  fwCtx.globalAlpha = 1;
+  if(ts < fwEnd || fwRockets.length || fwParts.length) fwRaf = requestAnimationFrame(fwFrame);
+  else stopFireworks();
+}
+function fireworks(ms){
+  fwResize(); fwCanvas.style.display = "block";
+  cancelAnimationFrame(fwRaf); fwParts = []; fwRockets = []; fwLast = 0;
+  const now = performance.now(); fwEnd = now + ms; fwNextLaunch = now;
+  fwBoom(innerWidth*.3, innerHeight*.3); fwBoom(innerWidth*.7, innerHeight*.25);
+  fwRaf = requestAnimationFrame(fwFrame);
+}
+function stopFireworks(){
+  cancelAnimationFrame(fwRaf); fwParts = []; fwRockets = [];
+  fwCtx.clearRect(0, 0, fwCanvas.width, fwCanvas.height); fwCanvas.style.display = "none";
+}
+
 /* ---------- Flow ---------- */
 function show(id){ $(id).classList.add("show"); }
 function hide(id){ $(id).classList.remove("show"); }
-function hideAll(){ ["ovStart","ovPause","ovClear","ovFail","ovOver"].forEach(hide); }
+function hideAll(){ stopFireworks(); ["ovSettings","ovPause","ovClear","ovFail","ovOver"].forEach(hide); }
 
 function updateButtons(){
   const inPlay = ["ready","memorize","answer"].includes(S.phase);
   $("btnPause").disabled = !inPlay;
   $("btnHint").disabled = !(S.phase==="answer" && !S.hintUsed && !S.busy);
   $("hintBadge").textContent = S.hintUsed ? "0" : "1";
-  $("btnStart").classList.toggle("hidden", S.phase!=="ready");
-  $("btnHint").classList.toggle("hidden", S.phase==="ready");
+  $("btnStart").disabled = S.phase!=="ready";
 }
 
 function startGame(mode){
-  ac();
-  S.mode = mode; S.level = 1; S.lives = 3; S.score = 0; S.streak = 0; S.maxCleared = 0;
+  S.mode = mode; S.level = 1; S.lives = 3; S.streak = 0; S.maxCleared = 0;
   hideAll(); renderHearts(); renderScore(); startLevel();
 }
 
 function startLevel(){
-  cancelAnimationFrame(S.raf);
+  cancelAnimationFrame(S.raf); $("tbar").classList.add("hidden");
   S.cfg = levelCfg(S.level);
   S.positions = placeNumbers(S.cfg.cols, S.cfg.rows, S.cfg.count);
   S.next = 1; S.hintUsed = false; S.mistake = false; S.busy = false; S.paused = false;
   S.pauseAccum = 0; board.classList.remove("paused");
-  $("lvlNum").textContent = S.level;
+  $("lvlNum").innerHTML = S.level + (S.cfg.last ? `<small class="final">最終關</small>` : "");
   buildBoard();
+  S.phase = "ready";
   if(S.mode === "classic"){
-    S.phase = "memorize"; showNumbers();
-    setStatus(`記住 <b>${S.cfg.count}</b> 個數字的位置，點 <b>1</b> 開始！`);
-  } else {
-    S.phase = "ready";
-    setStatus(`第 ${S.level} 關：<b>${S.cfg.count}</b> 個數字，只有 <b>${S.cfg.time.toFixed(1)}</b> 秒記憶時間`);
+    showNumbers();
+    setStatus(`記住 <b>${S.cfg.count}</b> 個數字的位置，準備好就按「開始」`);
   }
+  else
+    setStatus(`第 ${S.level} 關：<b>${S.cfg.count}</b> 個數字，只有 <b>${S.cfg.time.toFixed(1)}</b> 秒記憶時間`);
   updateButtons();
 }
 
-function beginCountdown(){
+function beginRound(){
   if(S.phase!=="ready" || S.paused) return;
   ac();
+  if(S.mode === "classic"){
+    // numbers are already showing: cover them all at once and start answering
+    cover(1); startAnswer();
+    return;
+  }
   S.phase = "memorize"; showNumbers(); updateButtons();
   S.remain = S.cfg.time*1000; S.lastTs = performance.now(); S.lastTickSec = Math.ceil(S.cfg.time);
-  setStatus(`<span>記住它們！<b id="secs">${S.cfg.time.toFixed(1)}</b> 秒</span><div class="bar"><i id="barFill"></i></div>`);
+  $("tbar").classList.remove("hidden"); $("barFill").style.width = "100%";
   const loop = ts => {
     const dt = ts - S.lastTs; S.lastTs = ts;
     if(!S.paused) S.remain -= dt;
@@ -521,7 +652,7 @@ function beginCountdown(){
     if(fill) fill.style.width = (r/(S.cfg.time*1000)*100)+"%";
     if(secs) secs.textContent = (r/1000).toFixed(1);
     const sec = Math.ceil(r/1000); if(sec < S.lastTickSec && sec>0 && !S.paused){ S.lastTickSec = sec; sfx.tick(); }
-    if(r <= 0){ cover(1); startAnswer(); return; }
+    if(r <= 0){ $("tbar").classList.add("hidden"); cover(1); startAnswer(); return; }
     S.raf = requestAnimationFrame(loop);
   };
   S.raf = requestAnimationFrame(loop);
@@ -536,15 +667,6 @@ function startAnswer(){
 function onTile(n, t){
   if(S.busy || S.paused) return;
   if(t.classList.contains("done")) return;
-  if(S.phase === "memorize" && S.mode === "classic"){
-    if(n === 1){
-      markDone(t, 1); S.next = 2;
-      if(S.cfg.count > 1) cover(2);
-      startAnswer();
-      if(S.next > S.cfg.count) levelClear();
-    } else wrong(n, t);
-    return;
-  }
   if(S.phase !== "answer") return;
   if(n === S.next){
     markDone(t, n); S.next++;
@@ -585,26 +707,15 @@ function wrong(n, t){
 
 function levelClear(){
   S.busy = true; S.phase = "result";
-  const elapsed = (performance.now() - S.answerStart - S.pauseAccum)/1000;
-  const count = S.cfg.count;
-  const base = count*100;
-  const limit = count*1.2 + 1;
-  const timeBonus = Math.max(0, Math.round((limit - elapsed)*40));
-  const perfect = !S.mistake && !S.hintUsed;
-  if(perfect) S.streak++; else S.streak = 0;
-  const combo = perfect ? S.streak*50 : 0;
-  const gained = base + timeBonus + combo;
-  S.score += gained; S.maxCleared = Math.max(S.maxCleared, count);
-  renderScore(true); sfx.clear();
-  sparkle(S.tiles[count], "+"+gained);
+  S.maxCleared = Math.max(S.maxCleared, S.cfg.count);
+  sfx.clear(); sparkle(S.tiles[S.cfg.count]);
   updateButtons();
   const titles = ["過關！","太棒了！","好厲害！","記憶力爆發！","完美！"];
-  $("clearTitle").textContent = perfect && S.streak>=3 ? `${S.streak} 連擊！` : titles[Math.floor(Math.random()*titles.length)];
-  $("breakdown").innerHTML =
-    `<span>數字 ${count} 個 × 100</span><b>${base}</b>`+
-    `<span>速度加成（${elapsed.toFixed(1)} 秒）</span><b>+${timeBonus}</b>`+
-    `<span>無失誤連擊 ${perfect ? "×"+S.streak : (S.hintUsed ? "（用了提示）" : "")}</span><b>+${combo}</b>`+
-    `<span class="tot">本關得分</span><b class="tot">${gained}</b>`;
+  $("clearTitle").textContent = titles[Math.floor(Math.random()*titles.length)];
+  const left = totalLevels() - S.level;
+  $("breakdown").innerHTML = `<div class="lvnow">第 <b>${S.level}</b> 關完成</div>` +
+    (left > 0 ? `<div class="lvleft">還剩 <b>${left}</b> 關</div>` : `<div class="lvleft">這是最後一關！</div>`);
+  $("btnNext").textContent = S.cfg.last ? "完成挑戰 🏆" : "下一關 ▶";
   setTimeout(()=>show("ovClear"), 650);
 }
 
@@ -615,26 +726,70 @@ function rankFor(n){
   return ["暖身中的小腦袋","多玩幾次，記憶力會越來越好喔！🌱"];
 }
 
-function gameOver(){
-  hideAll(); sfx.over(); S.phase = "idle"; updateButtons();
-  const [title, desc] = rankFor(S.maxCleared);
+function gameOver(win){
+  hideAll(); S.phase = "idle"; updateButtons();
+  if(win){ sfx.clear(); fireworks(6500); } else sfx.over();
+  $("overTitle").textContent = win ? "🎉 全部過關！" : "遊戲結束";
+  $("btnMenu").classList.toggle("hidden", !!win);
+  const [title, desc0] = rankFor(S.maxCleared);
+  const desc = win ? `${totalLevels()} 關全部完成，太厲害了！` : desc0;
   $("rankTitle").textContent = title; $("rankDesc").textContent = desc;
-  $("oScore").textContent = S.score.toLocaleString("en-US");
-  $("oLevel").textContent = S.level; $("oNums").textContent = S.maxCleared;
-  const b = best[S.mode] || {score:0, level:0, nums:0};
-  const isNew = S.score > b.score;
-  best[S.mode] = { score: Math.max(b.score, S.score), level: Math.max(b.level, S.level), nums: Math.max(b.nums, S.maxCleared) };
+  const cleared = win ? S.level : S.level - 1;
+  $("oLevel").textContent = cleared; $("oTotal").textContent = totalLevels(); $("oNums").textContent = S.maxCleared;
+  const b = best[S.mode] || {};
+  const prevNums = b.nums || 0;
+  const isNew = S.maxCleared > prevNums;
+  best[S.mode] = { nums: Math.max(prevNums, S.maxCleared) };
   saveBest(best); refreshBest();
-  const mb = best[S.mode];
-  $("oBest").innerHTML = (isNew && S.score>0 ? `<span class="newrec">新紀錄！</span><br>` : "") +
-    `${S.mode==="classic"?"經典":"限時"}模式最佳：${mb.score.toLocaleString("en-US")} 分 · 第 ${mb.level} 關 · ${mb.nums} 個數字`;
+  $("oBest").innerHTML = (isNew ? `<span class="newrec">新紀錄！</span><br>` : "") +
+    `${S.mode==="classic"?"經典":"限時"}模式最佳紀錄：記住 ${best[S.mode].nums} 個數字`;
   show("ovOver");
 }
 
+let draft = {...settings};
+function renderSettings(){
+  $("vStart").textContent = draft.start; $("vMax").textContent = draft.max;
+  document.querySelectorAll(".mode").forEach(b => b.classList.toggle("sel", b.dataset.mode === draft.mode));
+  document.querySelectorAll(".stepper button").forEach(b=>{
+    const k = b.dataset.k, d = +b.dataset.d, v = draft[k] + d;
+    b.disabled = k==="levels" ? (v < 1 || v > LEVELS_MAX) : (v < (k==="max" ? draft.start : LIMIT.min) || v > LIMIT.max);
+  });
+  $("vLevels").textContent = draft.levels;
+  const L = draft.levels, lastCount = Math.min(draft.start + L - 1, draft.max), reachAt = draft.max - draft.start + 1;
+  let t;
+  if(L === 1) t = `只有 1 關：${draft.start} 個數字。`;
+  else if(draft.start === draft.max) t = `共 ${L} 關，每一關都是 ${draft.start} 個數字。`;
+  else if(L > reachAt) t = `共 ${L} 關：第 1 關 ${draft.start} 個數字，每關 +1，第 ${reachAt} 關起都是 ${draft.max} 個數字。`;
+  else t = `共 ${L} 關：第 1 關 ${draft.start} 個數字，每關 +1，最後一關 ${lastCount} 個數字。`;
+  $("setPreview").textContent = t;
+}
+let settingsPausedGame = false, settingsFrom = null;
+function openSettings(){
+  draft = {...settings}; refreshBest(); renderSettings();
+  settingsFrom = ["ovOver","ovClear","ovFail","ovPause"].find(id => $(id).classList.contains("show")) || null;
+  settingsPausedGame = false;
+  if(!S.paused && ["ready","memorize","answer"].includes(S.phase)){
+    S.paused = true; S.pauseStart = performance.now(); board.classList.add("paused"); settingsPausedGame = true;
+  }
+  if(settingsFrom) hide(settingsFrom);
+  show("ovSettings");
+}
+function closeSettings(){
+  hide("ovSettings");
+  if(settingsFrom) show(settingsFrom);
+  else if(settingsPausedGame) resume();
+}
+document.querySelectorAll(".mode").forEach(b => b.addEventListener("click", () => { draft.mode = b.dataset.mode; renderSettings(); }));
+document.querySelectorAll(".stepper button").forEach(b => b.addEventListener("click", () => {
+  const k = b.dataset.k; draft[k] += +b.dataset.d;
+  if(k==="start" && draft.max < draft.start) draft.max = draft.start;
+  draft = clampSettings(draft); renderSettings();
+}));
+
 function refreshBest(){
   const c = best.classic, t = best.timed;
-  $("bestClassic").textContent = c ? `最佳 ${c.score.toLocaleString("en-US")} 分 · 第${c.level}關` : "還沒有紀錄";
-  $("bestTimed").textContent = t ? `最佳 ${t.score.toLocaleString("en-US")} 分 · 第${t.level}關` : "還沒有紀錄";
+  $("bestClassic").textContent = c && c.nums ? `最佳：記住 ${c.nums} 個` : "還沒有紀錄";
+  $("bestTimed").textContent = t && t.nums ? `最佳：記住 ${t.nums} 個` : "還沒有紀錄";
 }
 
 /* ---------- Pause / hint ---------- */
@@ -659,17 +814,23 @@ function hint(){
 }
 
 /* ---------- Wiring ---------- */
-document.querySelectorAll(".mode").forEach(b => b.addEventListener("click", () => startGame(b.dataset.mode)));
-$("btnStart").addEventListener("click", beginCountdown);
+$("btnStart").addEventListener("click", beginRound);
 $("btnPause").addEventListener("click", pause);
 $("btnResume").addEventListener("click", resume);
 $("btnHint").addEventListener("click", hint);
-$("btnNext").addEventListener("click", () => { hide("ovClear"); S.level++; startLevel(); });
+$("btnNext").addEventListener("click", () => { hide("ovClear"); if(S.cfg.last){ gameOver(true); } else { S.level++; startLevel(); } });
 $("btnRetry").addEventListener("click", () => { hide("ovFail"); startLevel(); });
 $("btnAgain").addEventListener("click", () => startGame(S.mode));
-function toMenu(){ cancelAnimationFrame(S.raf); hideAll(); S.phase="idle"; S.paused=false; board.classList.remove("paused"); updateButtons(); refreshBest(); show("ovStart"); }
-$("btnMenu").addEventListener("click", toMenu);
-$("btnQuit").addEventListener("click", toMenu);
+$("btnMenu").addEventListener("click", openSettings);
+$("btnSettings").addEventListener("click", openSettings);
+$("btnSetCancel").addEventListener("click", closeSettings);
+$("btnSetReset").addEventListener("click", () => { draft = {...SET_DEFAULT}; renderSettings(); });
+$("btnSetSave").addEventListener("click", () => {
+  settings = clampSettings(draft);
+  try{ localStorage.setItem(SET_KEY, JSON.stringify(settings)); }catch(e){}
+  hide("ovSettings"); startGame(settings.mode);
+});
+$("btnQuit").addEventListener("click", () => startGame(S.mode));
 $("btnMute").addEventListener("click", () => {
   muted = !muted; $("btnMute").textContent = muted ? "🔇" : "🔊";
   try{ localStorage.setItem("numflash-muted", muted?"1":"0"); }catch(e){}
@@ -681,7 +842,7 @@ document.addEventListener("keydown", e => {
   else if(e.key==="Enter" || e.key===" "){
     if($("ovClear").classList.contains("show")) $("btnNext").click();
     else if($("ovFail").classList.contains("show")) $("btnRetry").click();
-    else if(S.phase==="ready" && !S.paused) beginCountdown();
+    else if(S.phase==="ready" && !S.paused) beginRound();
     e.preventDefault();
   } else if(e.key==="h" || e.key==="H") hint();
 });
@@ -689,13 +850,8 @@ document.addEventListener("visibilitychange", () => { if(document.hidden) pause(
 window.addEventListener("resize", fit);
 if(window.ResizeObserver) new ResizeObserver(fit).observe(boardWrap);
 
-/* Idle preview board behind the start screen */
-S.cfg = {cols:4, rows:4, count:6, time:3.5};
-S.positions = placeNumbers(4,4,6);
-buildBoard();
-S.tiles.forEach((t,i)=>{ if(t){ t.classList.remove("hidden"); if(i<=2){ t.classList.add("done"); t.innerHTML=`<span class="num">${i}</span>${CHECK_SVG}`; } else faceQ(t); } });
-renderHearts(); renderScore(); refreshBest(); updateButtons();
-setStatus("選一個模式開始挑戰吧！");
+refreshBest();
+startGame(settings.mode);
 })();
 </script>
 </body>
